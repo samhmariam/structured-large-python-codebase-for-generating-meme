@@ -1,17 +1,20 @@
-from abc import ABC, abstractmethod
-from typing import List, Type
+"""
+This module provides classes and methods to ingest and parse quotes from various file formats.
+"""
+
 import os
 import csv
 import docx
-import PyPDF2
 import subprocess
 import tempfile
+from abc import ABC, abstractmethod
+from typing import List, Type
 import pandas as pd
-
 
 
 class QuoteModel:
     """A class to encapsulate a quote and its author."""
+
     def __init__(self, body, author):
         """
         Initialize a new QuoteModel instance.
@@ -30,8 +33,10 @@ class QuoteModel:
         """
         return f'"{self.body}" - {self.author}'
 
+
 class IngestorInterface(ABC):
     """An abstract base class for all ingestors."""
+
     @classmethod
     @abstractmethod
     def can_ingest(cls, path: str) -> bool:
@@ -54,8 +59,10 @@ class IngestorInterface(ABC):
         """
         pass
 
+
 class CSVIngestor(IngestorInterface):
     """An ingestor for CSV files."""
+
     @classmethod
     def can_ingest(cls, path: str) -> bool:
         """
@@ -81,8 +88,10 @@ class CSVIngestor(IngestorInterface):
             quotes.append(new_quote)
         return quotes
 
+
 class DocxIngestor(IngestorInterface):
     """An ingestor for DOCX files."""
+
     @classmethod
     def can_ingest(cls, path: str) -> bool:
         """
@@ -110,8 +119,10 @@ class DocxIngestor(IngestorInterface):
                 quotes.append(new_quote)
         return quotes
 
+
 class PDFIngestor(IngestorInterface):
     """An ingestor for PDF files."""
+
     @classmethod
     def can_ingest(cls, path: str) -> bool:
         """
@@ -147,8 +158,10 @@ class PDFIngestor(IngestorInterface):
         os.remove(temp_filename)
         return quotes
 
+
 class TXTIngestor(IngestorInterface):
     """An ingestor for TXT files."""
+
     @classmethod
     def can_ingest(cls, path: str) -> bool:
         """
@@ -179,8 +192,10 @@ class TXTIngestor(IngestorInterface):
                     quotes.append(new_quote)
         return quotes
 
+
 class Ingestor(IngestorInterface):
     """A class to encapsulate all ingestors and provide a single interface."""
+
     ingestors = [CSVIngestor, DocxIngestor, PDFIngestor, TXTIngestor]
 
     @classmethod

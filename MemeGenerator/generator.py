@@ -1,6 +1,13 @@
+"""
+This module contains the MemeEngine class which is used to generate memes
+by adding text and author to images.
+"""
+
 from PIL import Image, ImageDraw, ImageFont
 import os
 import random
+import textwrap
+
 
 class MemeEngine:
     """A class to generate memes with text and author on images."""
@@ -35,9 +42,23 @@ class MemeEngine:
 
         draw = ImageDraw.Draw(img)
         font = ImageFont.truetype(self.font_path, size=20)
-        text_position = (random.randint(0, width - 100), random.randint(0, new_height - 50))
-        draw.text(text_position, f'{text} - {author}', font=font, fill='white')
+        
+        # Wrap the text
+        wrapped_text = textwrap.fill(text, width=40)
+        full_text = f'{wrapped_text}\n- {author}'
+        
+        # Calculate text size using textbbox
+        text_bbox = draw.textbbox((0, 0), full_text, font=font)
+        text_size = (text_bbox[2] - text_bbox[0], text_bbox[3] - text_bbox[1])
+        
+        # Calculate text size and position to center it
+        text_x = (width - text_size[0]) / 2
+        text_y = (new_height - text_size[1]) / 2
+        
+        draw.text((text_x, text_y), full_text, font=font, fill='white')
 
-        output_path = os.path.join(self.output_dir, f'meme_{random.randint(0, 1000000)}.jpg')
+        output_path = os.path.join(
+            self.output_dir, f'meme_{random.randint(0, 1000000)}.jpg'
+        )
         img.save(output_path)
         return output_path

@@ -1,3 +1,8 @@
+"""
+Meme Generator Module.
+
+This module provides functionality to generate memes with optional quotes.
+"""
 import os
 import random
 import argparse
@@ -7,9 +12,9 @@ from PIL import Image
 from QuoteEngine import Ingestor, QuoteModel
 from MemeGenerator import MemeEngine
 
+
 def generate_meme(path=None, body=None, author=None):
-    """ 
-    Generate a meme given an image path and a quote.
+    """Generate a meme given an image path and a quote.
     
     Args:
         path (str): Path to the image file.
@@ -33,10 +38,12 @@ def generate_meme(path=None, body=None, author=None):
         img = path
 
     if body is None:
-        quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
-                       './_data/DogQuotes/DogQuotesDOCX.docx',
-                       './_data/DogQuotes/DogQuotesPDF.pdf',
-                       './_data/DogQuotes/DogQuotesCSV.csv']
+        quote_files = [
+            './_data/DogQuotes/DogQuotesTXT.txt',
+            './_data/DogQuotes/DogQuotesDOCX.docx',
+            './_data/DogQuotes/DogQuotesPDF.pdf',
+            './_data/DogQuotes/DogQuotesCSV.csv'
+        ]
         quotes = []
         for f in quote_files:
             quotes.extend(Ingestor.parse(f))
