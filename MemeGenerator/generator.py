@@ -5,13 +5,15 @@ import random
 class MemeEngine:
     """A class to generate memes with text and author on images."""
 
-    def __init__(self, output_dir):
+    def __init__(self, output_dir, font_path='./_data/fonts/Roboto-Bold.ttf'):
         """
-        Initialize the MemeEngine with an output directory.
+        Initialize the MemeEngine with an output directory and font path.
 
         :param output_dir: The directory where the generated memes will be saved.
+        :param font_path: The file path to the font to be used for the text.
         """
         self.output_dir = output_dir
+        self.font_path = font_path
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
@@ -32,7 +34,7 @@ class MemeEngine:
         img = img.resize((width, new_height), Image.LANCZOS)
 
         draw = ImageDraw.Draw(img)
-        font = ImageFont.truetype("arial.ttf", size=20)
+        font = ImageFont.truetype(self.font_path, size=20)
         text_position = (random.randint(0, width - 100), random.randint(0, new_height - 50))
         draw.text(text_position, f'{text} - {author}', font=font, fill='white')
 

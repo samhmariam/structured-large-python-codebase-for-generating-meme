@@ -1,11 +1,11 @@
 import os
 import random
 import argparse
+import requests
 from PIL import Image
 
 from QuoteEngine import Ingestor, QuoteModel
 from MemeGenerator import MemeEngine
-
 
 def generate_meme(path=None, body=None, author=None):
     """ 
@@ -47,7 +47,7 @@ def generate_meme(path=None, body=None, author=None):
             raise Exception('Author Required if Body is Used')
         quote = QuoteModel(body, author)
 
-    meme = MemeEngine('./tmp')
+    meme = MemeEngine('./tmp', './_data/fonts/Roboto-Bold.ttf')
     path = meme.make_meme(img, quote.body, quote.author)
     return path
 
