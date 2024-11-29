@@ -1,6 +1,7 @@
 """
-This module contains the MemeEngine class which is used to generate memes
-by adding text and author to images.
+This module provides the MemeEngine class.
+
+The MemeEngine class is responsible for generating memes.
 """
 
 from PIL import Image, ImageDraw, ImageFont
@@ -16,7 +17,7 @@ class MemeEngine:
         """
         Initialize the MemeEngine with an output directory and font path.
 
-        :param output_dir: The directory where the generated memes will be saved.
+        :param output_dir: The directory where memes will be saved.
         :param font_path: The file path to the font to be used for the text.
         """
         self.output_dir = output_dir

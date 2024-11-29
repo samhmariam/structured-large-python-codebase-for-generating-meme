@@ -14,16 +14,7 @@ from MemeGenerator import MemeEngine
 
 
 def generate_meme(path=None, body=None, author=None):
-    """Generate a meme given an image path and a quote.
-    
-    Args:
-        path (str): Path to the image file.
-        body (str): Quote body to add to the image.
-        author (str): Quote author to add to the image.
-    
-    Returns:
-        str: Path to the generated meme image.
-    """
+    """Generate a meme given an image path and a quote."""
     img = None
     quote = None
 
@@ -60,11 +51,20 @@ def generate_meme(path=None, body=None, author=None):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate a meme with an optional quote.")
+    parser = argparse.ArgumentParser(
+        description="Generate a meme with an optional quote."
+    )
     parser.add_argument('--path', type=str, help='path to an image file')
-    parser.add_argument('--body', type=str, help='quote body to add to the image')
-    parser.add_argument('--author', type=str, help='quote author to add to the image')
-    
+    parser.add_argument(
+        '--body',
+        type=str, 
+        help='quote body to add to the image'
+    )
+    parser.add_argument(
+        '--author',
+        type=str,
+        help='quote author to add to the image'
+    )
     args = parser.parse_args()
     
     print(generate_meme(args.path, args.body, args.author))

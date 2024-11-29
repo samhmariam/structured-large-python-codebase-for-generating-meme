@@ -1,6 +1,8 @@
 """
 This module provides a Flask web application for generating memes.
-It allows users to create memes with random quotes or user-defined quotes and images.
+
+It allows users to create memes with random quotes or user-defined quotes
+and images.
 """
 
 import os
@@ -32,7 +34,7 @@ def setup():
 
     images_path = "./_data/photos/dog/"
 
-    # Use the python standard library os class to find all images within the images_path directory
+    # find all images within the images_path directory
     imgs = [
         os.path.join(images_path, img)
         for img in os.listdir(images_path)
@@ -63,12 +65,11 @@ def meme_form():
 @app.route('/create', methods=['POST'])
 def meme_post():
     """Create a user defined meme.
-    
-    1. Use requests to save the image from the image_url form param to a temp local file.
-    2. Use the meme object to generate a meme using this temp file and the body and author form parameters.
+    1. Use requests to save the image to a temp local file.
+    2. Use the meme object to generate a meme.
     3. Remove the temporary saved image.
     """
-    # 1. Use requests to save the image from the image_url form param to a temp local file.
+    # 1. Use requests to save the image to a temp local file.
     image_url = request.form.get('image_url')
     body = request.form.get('body')
     author = request.form.get('author')
@@ -80,7 +81,7 @@ def meme_post():
         with open(img_path, 'wb') as file:
             file.write(r.content)
 
-        # 2. Use the meme object to generate a meme using this temp file and the body and author form parameters.
+        # 2. Use the meme object to generate a meme.
         path = meme.make_meme(img_path, body, author)
 
         # 3. Remove the temporary saved image.
@@ -89,7 +90,13 @@ def meme_post():
         return render_template('meme.html', path=path)
     except requests.exceptions.RequestException as e:
         # Show a friendly message to the user
-        return render_template('meme_form.html', error="Invalid image URL. Please try again.")
+        return render_template(
+            'meme_form.html',
+            error="Invalid image URL. Please try again."
+        )
+    except Exception as e:
+        print(f'Error: {e}')
+        return render_template('meme_error.html')
 
 
 if __name__ == "__main__":

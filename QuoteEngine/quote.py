@@ -1,6 +1,4 @@
-"""
-This module provides classes and methods to ingest and parse quotes from various file formats.
-"""
+"""This module provides the Quote class."""
 
 import os
 import csv
@@ -221,4 +219,6 @@ class Ingestor(IngestorInterface):
         for ingestor in cls.ingestors:
             if ingestor.can_ingest(path):
                 return ingestor.parse(path)
-        raise ValueError(f'Cannot ingest file with extension {os.path.splitext(path)[1]}')
+        raise ValueError(
+            'Invalid file format! Supported formats are .txt, .csv, .docx, .pdf'
+        )
