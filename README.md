@@ -26,7 +26,9 @@ The application can be run using the following two options:
 
 1. Command line interface. The application can be run using the following command:
 
-    `python meme.py`
+    ```
+        > python meme.py
+    ```
 
     or alternatively with the following optional arguments:
 
@@ -34,12 +36,22 @@ The application can be run using the following two options:
     2. `--author`: The author of the quote.
     3. `--path`: The path to the image file.
 
+    For example:
+
+    ```
+        > python meme.py --body "quote" --author "author" --path "path/to/image"
+    ```
+
 
 2. Web interface. The application can be run using the following command:
 
-    `python app.py`
+    ```
+        > python app.py
+    ```
 
-    The application can be accessed at `http://127.0.0.1:5000/`.
+    The application can be accessed at the following URL:
+    
+    ```http://127.0.0.1:5000/```
 
     
 
